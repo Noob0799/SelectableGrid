@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import SelectableGrid from "./components/SelectableGrid";
 
 function App() {
+  const [resetGrid, setResetGrid] = useState(false);
+
+  const handleMouseUp = (event) => {
+    if(!event.target.classList.contains('grid-cell')) {
+      setResetGrid(true);
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app" onMouseUp={handleMouseUp}>
+      <h1>Selectable Grid</h1>
+      <SelectableGrid rows={10} cols={15} resetGrid={resetGrid} setResetGrid={(flag) => setResetGrid(flag)} />
     </div>
   );
 }
