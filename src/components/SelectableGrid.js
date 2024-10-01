@@ -18,8 +18,8 @@ function SelectableGrid({ rows = 10, cols = 10, resetGrid, setResetGrid }) {
   };
   const handleMouseEnter = (x, y) => {
     if (isMouseDown) {
-      const firstRow = Math.floor(selectedCells[0] / cols);
-      const firstCol = (selectedCells[0] % cols) - 1;
+      const firstRow = Math.ceil(selectedCells[0] / cols) - 1;
+      const firstCol = (selectedCells[0] % cols) == 0 ? cols - 1 : (selectedCells[0] % cols) - 1;
       const minRow = Math.min(firstRow, x);
       const minCol = Math.min(firstCol, y);
       const maxRow = Math.max(firstRow, x);
@@ -44,7 +44,7 @@ function SelectableGrid({ rows = 10, cols = 10, resetGrid, setResetGrid }) {
             newSelectedCells.push(i * cols + j + 1);
           }
         }
-      } else {
+      } else if(firstRow == minRow && firstCol == maxCol) {
         for (let i = minRow; i <= maxRow; i++) {
           for (let j = maxCol; j >= minCol; j--) {
             newSelectedCells.push(i * cols + j + 1);
